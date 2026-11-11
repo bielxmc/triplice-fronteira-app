@@ -2,7 +2,7 @@
 
 Aplicação web responsiva desenvolvida para auxiliar moradores, comerciantes e viajantes da Tríplice Fronteira (**Tabatinga 🇧🇷 • Letícia 🇨🇴 • Santa Rosa 🇵🇪**).
 
-🔗 **Acesse o aplicativo funcionando:** [https://github.io](https://github.io)
+🔗 **Acesse o aplicativo funcionando:** [https://bielxmc.github.io/triplice-fronteira-app/])
 
 ---
 
