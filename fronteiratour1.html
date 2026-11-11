@@ -1,0 +1,700 @@
+<!-- "A dor é passageira, mas a glória é eterna." - DonKxKong -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tríplice Fronteira Digital • App Completo Offline</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #090d16;
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .app {
+      background-color: #131c2e;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid #263552;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    }
+
+    header {
+      background: linear-gradient(135deg, #059669 0%, #0284c7 50%, #dc2626 100%);
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 19px;
+      font-weight: 800;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    header p {
+      font-size: 12px;
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    .status-bar {
+      background-color: #0b111e;
+      padding: 6px 16px;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .badge {
+      padding: 2px 9px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .online { background: #064e3b; color: #34d399; }
+    .offline { background: #7f1d1d; color: #fca5a5; }
+
+    /* Menu de Navegação */
+    .nav-tabs {
+      display: flex;
+      background-color: #0b111e;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 4px;
+      border: none;
+      background: none;
+      color: #94a3b8;
+      font-size: 11.5px;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: 0.2s;
+    }
+
+    .tab-btn.active {
+      color: #38bdf8;
+      border-bottom: 3px solid #38bdf8;
+      background-color: #131c2e;
+    }
+
+    .tela {
+      padding: 18px;
+      max-height: 76vh;
+      overflow-y: auto;
+    }
+
+    .hidden { display: none; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 4px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background-color: #0b111e;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 12px;
+      color: white;
+    }
+
+    .btn-azul { background: #0284c7; }
+    .btn-verde { background: #059669; }
+    .btn-vermelho { background: #dc2626; padding: 5px 9px; width: auto; margin-top: 0; font-size: 11px; }
+
+    .box-resultado {
+      background-color: #0b111e;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border-left: 4px solid #10b981;
+      margin-top: 12px;
+    }
+
+    .linha-moeda {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #1e293b;
+      font-size: 13.5px;
+    }
+
+    .linha-moeda:last-child { border-bottom: none; }
+    .destaque-verde { font-weight: bold; color: #34d399; font-size: 14.5px; }
+    .destaque-alerta { font-weight: bold; color: #f87171; font-size: 13px; }
+
+    .secao-divisoria {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed #334155;
+    }
+
+    .titulo-secao {
+      font-size: 14px;
+      color: #38bdf8;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    /* Filtros e Cards do Guia */
+    .filtros {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filtro-btn {
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 1px solid #334155;
+      background: #0b111e;
+      color: #cbd5e1;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .filtro-btn.ativo {
+      background: #0284c7;
+      color: white;
+      border-color: #0284c7;
+    }
+
+    .card {
+      background-color: #0b111e;
+      padding: 13px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #1e293b;
+    }
+
+    .card h3 {
+      font-size: 13.5px;
+      color: #38bdf8;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .card p {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .tag-pais {
+      font-size: 10px;
+      background: #1e293b;
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #94a3b8;
+    }
+
+    /* Dicionário e Frases */
+    .frase-item {
+      background: #0b111e;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 8px;
+      border-left: 3px solid #f59e0b;
+    }
+
+    .frase-cat {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #38bdf8;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .frase-pt { font-size: 12.5px; color: #cbd5e1; }
+    .frase-es { font-size: 14px; color: #fbbf24; font-weight: bold; margin-top: 3px; }
+
+    /* Checklist Offline */
+    .item-lista {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0b111e;
+      padding: 9px 11px;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 11px;
+      font-size: 11px;
+      color: #64748b;
+      background-color: #0b111e;
+      border-top: 1px solid #1e293b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <header>
+      <h1>🌎 Tríplice Fronteira Digital</h1>
+      <p>Tabatinga 🇧🇷 • Letícia 🇨🇴 • Santa Rosa 🇵🇪</p>
+    </header>
+
+    <div class="status-bar">
+      <span>Memória Offline: Ativa</span>
+      <span id="badge-rede" class="badge online">🟢 Online</span>
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO -->
+    <div class="nav-tabs">
+      <button type="button" class="tab-btn active" data-alvo="tela-cambio">💱 Câmbio</button>
+      <button type="button" class="tab-btn" data-alvo="tela-troco">🧮 Troco Misto</button>
+      <button type="button" class="tab-btn" data-alvo="tela-guia">📍 Guia</button>
+      <button type="button" class="tab-btn" data-alvo="tela-dicionario">🗣️ Dicionário</button>
+      <button type="button" class="tab-btn" data-alvo="tela-notas">📝 Notas</button>
+    </div>
+
+    <!-- ==========================================
+         TELA 1: CONVERSOR + COTAÇÃO OFFLINE
+    =========================================== -->
+    <div id="tela-cambio" class="tela">
+      <div class="titulo-secao">Conversor Rápido Simultâneo</div>
+      
+      <div class="grid-2">
+        <div>
+          <label>Moeda na mão:</label>
+          <select id="moeda-origem">
+            <option value="BRL">🇧🇷 Real (R$)</option>
+            <option value="COP">🇨🇴 Peso (COP)</option>
+            <option value="PEN">🇵🇪 Sol (S/)</option>
+          </select>
+        </div>
+        <div>
+          <label>Valor:</label>
+          <input type="number" id="valor-entrada" placeholder="Ex: 50">
+        </div>
+      </div>
+
+      <div class="box-resultado">
+        <div class="linha-moeda"><span>🇧🇷 Real Brasileiro:</span> <span class="destaque-verde" id="res-brl">R$ 0,00</span></div>
+        <div class="linha-moeda"><span>🇨🇴 Peso Colombiano:</span> <span class="destaque-verde" id="res-cop">$ 0</span></div>
+        <div class="linha-moeda"><span>🇵🇪 Sol Peruano:</span> <span class="destaque-verde" id="res-pen">S/ 0,00</span></div>
+      </div>
+
+      <div class="secao-divisoria">
+        <div class="titulo-secao">⚙️ Cotação do Dia (1 Real vale quanto?)</div>
+        <div class="grid-2">
+          <div>
+            <label>🇨🇴 Pesos (COP):</label>
+            <input type="number" id="taxa-cop" value="750">
+          </div>
+          <div>
+            <label>🇵🇪 Soles (PEN):</label>
+            <input type="number" id="taxa-pen" value="0.65" step="0.01">
+          </div>
+        </div>
+        <button type="button" class="btn btn-verde" id="btn-salvar-taxa">💾 Salvar Cotação Offline</button>
+        <p id="msg-taxa" style="color:#34d399; font-size:12px; text-align:center; margin-top:6px;"></p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TELA 2: CALCULADORA DE TROCO MISTO
+    =========================================== -->
+    <div id="tela-troco" class="tela hidden">
+      <div class="titulo-secao">🧮 Calculadora de Troco Misto</div>
+      <p style="font-size:12px; color:#94a3b8; margin-bottom:8px;">
+        Ex: O produto custa em Pesos, mas você vai pagar com nota de Real ou Sol.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <label>Moeda do Preço:</label>
+          <select id="moeda-compra">
+            <option value="COP">🇨🇴 Peso (COP)</option>
+            <option value="BRL">🇧🇷 Real (R$)</option>
+            <option value="PEN">🇵🇪 Sol (S/)</option>
+          </select>
+        </div>
+        <div>
+          <label>Valor da Compra:</label>
+          <input type="number" id="valor-compra" placeholder="Ex: 30000">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label>Você pagou em:</label>
+          <select id="moeda-pagamento">
+            <option value="BRL">🇧🇷 Real (R$)</option>
+            <option value="COP">🇨🇴 Peso (COP)</option>
+            <option value="PEN">🇵🇪 Sol (S/)</option>
+          </select>
+        </div>
+        <div>
+          <label>Nota entregue:</label>
+          <input type="number" id="valor-pagamento" placeholder="Ex: 50">
+        </div>
+      </div>
+
+      <div class="box-resultado" style="border-left-color: #38bdf8;">
+        <div id="status-troco" style="margin-bottom:6px;"></div>
+        <div class="linha-moeda"><span>🇧🇷 Troco em Real:</span> <span class="destaque-verde" id="troco-brl">R$ 0,00</span></div>
+        <div class="linha-moeda"><span>🇨🇴 Troco em Peso:</span> <span class="destaque-verde" id="troco-cop">$ 0</span></div>
+        <div class="linha-moeda"><span>🇵🇪 Troco em Sol:</span> <span class="destaque-verde" id="troco-pen">S/ 0,00</span></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TELA 3: GUIA COMPLETO DOS 3 PAÍSES
+    =========================================== -->
+    <div id="tela-guia" class="tela hidden">
+      <div class="filtros">
+        <button type="button" class="filtro-btn ativo" data-pais="todos">Todos</button>
+        <button type="button" class="filtro-btn" data-pais="br">🇧🇷 Tabatinga</button>
+        <button type="button" class="filtro-btn" data-pais="co">🇨🇴 Letícia</button>
+        <button type="button" class="filtro-btn" data-pais="pe">🇵🇪 Santa Rosa</button>
+      </div>
+
+      <div class="card" data-pais="br co pe">
+        <h3>🕒 Fuso Horário Local <span class="tag-pais">GERAL</span></h3>
+        <p><strong>Tabatinga (AM):</strong> 1 hora à frente.<br>
+           <strong>Letícia e Santa Rosa:</strong> 1 hora a menos que Tabatinga.</p>
+      </div>
+
+      <div class="card" data-pais="br co pe">
+        <h3>🛂 Imigração e Documentos <span class="tag-pais">FRONTEIRA</span></h3>
+        <p>Circulação livre entre Tabatinga e Letícia na área urbana. Para voos em Letícia ou viagens ao interior da Colômbia/Peru, registre entrada na <strong>Polícia Federal</strong> e <strong>Migración</strong> (RG menos de 10 anos ou Passaporte).</p>
+      </div>
+
+      <div class="card" data-pais="pe br co">
+        <h3>🚤 Travessia Santa Rosa <span class="tag-pais">TRANSPORTE</span></h3>
+        <p>Barcos saem continuamente (06h às 18h) do Porto de Tabatinga e do Malecón de Letícia. Travessia dura ~10 min e aceita Real, Peso ou Sol.</p>
+      </div>
+
+      <div class="card" data-pais="br">
+        <h3>🇧🇷 Tabatinga — Utilidades <span class="tag-pais">BRASIL</span></h3>
+        <p><strong>Emergência:</strong> PM (190) • SAMU (192) • Bombeiros (193) • UPA.<br>
+           <strong>Bancos:</strong> Banco do Brasil, Caixa Econômica e Bradesco.</p>
+      </div>
+
+      <div class="card" data-pais="co">
+        <h3>🇨🇴 Letícia — Utilidades <span class="tag-pais">COLÔMBIA</span></h3>
+        <p><strong>Emergência:</strong> Policía Nacional (123) • Hospital San Rafael.<br>
+           <strong>Comércio:</strong> Casas de câmbio na Carrera 11 e Avenida Internacional.</p>
+      </div>
+
+      <div class="card" data-pais="pe">
+        <h3>🇵🇪 Santa Rosa — Utilidades <span class="tag-pais">PERU</span></h3>
+        <p><strong>Gastronomia:</strong> Restaurantes flutuantes (Ceviche, Pollo a la Brasa).<br>
+           <strong>Conexão Fluvial:</strong> Lanchas rápidas para Iquitos pelo Rio Amazonas.</p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TELA 4: DICIONÁRIO PORTUGUÊS -> ESPANHOL
+    =========================================== -->
+    <div id="tela-dicionario" class="tela hidden">
+      <div class="titulo-secao">🗣️ Dicionário de Bolso (Português → Espanhol)</div>
+      <input type="text" id="busca-dicionario" placeholder="🔍 Pesquisar palavra (ex: troco, barco, preço, água)...">
+      <div id="lista-dicionario"></div>
+    </div>
+
+    <!-- ==========================================
+         TELA 5: LISTA E BLOCO DE NOTAS OFFLINE
+    =========================================== -->
+    <div id="tela-notas" class="tela hidden">
+      <div class="titulo-secao">🛒 Checklist / Lista de Compras</div>
+      <div style="display: flex; gap: 8px;">
+        <input type="text" id="novo-item" placeholder="Ex: Comprar café em Letícia...">
+        <button type="button" class="btn btn-azul" id="btn-add-item" style="width: auto; margin-top: 0;">+</button>
+      </div>
+      <div id="lista-itens"></div>
+
+      <div class="secao-divisoria">
+        <div class="titulo-secao">📝 Bloco de Notas Offline</div>
+        <textarea id="bloco-notas" rows="5" placeholder="Anote telefones, placas, preços ou horários..."></textarea>
+        <p style="color:#34d399; font-size:11px; margin-top:5px;">✅ Salvo automaticamente sem internet.</p>
+      </div>
+    </div>
+
+    <footer>
+      Desenvolvido por Gabriel Mocambite (DonkxKong) • ADS
+    </footer>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. NAVEGAÇÃO ENTRE AS 5 ABAS
+    // ==========================================
+    const botoesAba = document.querySelectorAll('.tab-btn');
+    const telas = document.querySelectorAll('.tela');
+
+    botoesAba.forEach(botao => {
+      botao.addEventListener('click', () => {
+        telas.forEach(t => t.classList.add('hidden'));
+        botoesAba.forEach(b => b.classList.remove('active'));
+        document.getElementById(botao.getAttribute('data-alvo')).classList.remove('hidden');
+        botao.classList.add('active');
+      });
+    });
+
+    // ==========================================
+    // 2. MONITOR DE REDE (ONLINE / OFFLINE)
+    // ==========================================
+    function verificarRede() {
+      const badge = document.getElementById('badge-rede');
+      if (navigator.onLine) {
+        badge.innerText = '🟢 Online';
+        badge.className = 'badge online';
+      } else {
+        badge.innerText = '🔴 Offline (Ativo)';
+        badge.className = 'badge offline';
+      }
+    }
+    window.addEventListener('online', verificarRede);
+    window.addEventListener('offline', verificarRede);
+    verificarRede();
+
+    // ==========================================
+    // 3. CONVERSOR E TROCO MISTO
+    // ==========================================
+    if (localStorage.getItem('tf_cop')) document.getElementById('taxa-cop').value = localStorage.getItem('tf_cop');
+    if (localStorage.getItem('tf_pen')) document.getElementById('taxa-pen').value = localStorage.getItem('tf_pen');
+
+    function obterTaxas() {
+      return {
+        BRL: 1,
+        COP: parseFloat(document.getElementById('taxa-cop').value) || 750,
+        PEN: parseFloat(document.getElementById('taxa-pen').value) || 0.65
+      };
+    }
+
+    function calcularConversor() {
+      const taxas = obterTaxas();
+      const moeda = document.getElementById('moeda-origem').value;
+      const valor = parseFloat(document.getElementById('valor-entrada').value) || 0;
+
+      const emReal = valor / taxas[moeda];
+
+      document.getElementById('res-brl').innerText = 'R$ ' + emReal.toFixed(2).replace('.', ',');
+      document.getElementById('res-cop').innerText = '$ ' + Math.round(emReal * taxas.COP).toLocaleString('pt-BR');
+      document.getElementById('res-pen').innerText = 'S/ ' + (emReal * taxas.PEN).toFixed(2).replace('.', ',');
+    }
+
+    function calcularTrocoMisto() {
+      const taxas = obterTaxas();
+      const moedaCompra = document.getElementById('moeda-compra').value;
+      const valorCompra = parseFloat(document.getElementById('valor-compra').value) || 0;
+
+      const moedaPag = document.getElementById('moeda-pagamento').value;
+      const valorPag = parseFloat(document.getElementById('valor-pagamento').value) || 0;
+
+      const compraEmReal = valorCompra / taxas[moedaCompra];
+      const pagEmReal = valorPag / taxas[moedaPag];
+      const diferencaReal = pagEmReal - compraEmReal;
+
+      const statusDiv = document.getElementById('status-troco');
+
+      if (valorCompra === 0 || valorPag === 0) {
+        statusDiv.innerHTML = '';
+        document.getElementById('troco-brl').innerText = 'R$ 0,00';
+        document.getElementById('troco-cop').innerText = '$ 0';
+        document.getElementById('troco-pen').innerText = 'S/ 0,00';
+        return;
+      }
+
+      if (diferencaReal < 0) {
+        const faltaReal = Math.abs(diferencaReal);
+        statusDiv.innerHTML = `<span class="destaque-alerta">⚠️ Falta pagar: R$ ${faltaReal.toFixed(2).replace('.', ',')} (ou $ ${Math.round(faltaReal * taxas.COP).toLocaleString('pt-BR')} COP)</span>`;
+        document.getElementById('troco-brl').innerText = 'R$ 0,00';
+        document.getElementById('troco-cop').innerText = '$ 0';
+        document.getElementById('troco-pen').innerText = 'S/ 0,00';
+      } else {
+        statusDiv.innerHTML = `<span style="color:#38bdf8; font-size:12px; font-weight:bold;">✅ Seu troco equivalente é:</span>`;
+        document.getElementById('troco-brl').innerText = 'R$ ' + diferencaReal.toFixed(2).replace('.', ',');
+        document.getElementById('troco-cop').innerText = '$ ' + Math.round(diferencaReal * taxas.COP).toLocaleString('pt-BR');
+        document.getElementById('troco-pen').innerText = 'S/ ' + (diferencaReal * taxas.PEN).toFixed(2).replace('.', ',');
+      }
+    }
+
+    document.getElementById('valor-entrada').addEventListener('input', calcularConversor);
+    document.getElementById('moeda-origem').addEventListener('change', calcularConversor);
+
+    document.getElementById('moeda-compra').addEventListener('change', calcularTrocoMisto);
+    document.getElementById('valor-compra').addEventListener('input', calcularTrocoMisto);
+    document.getElementById('moeda-pagamento').addEventListener('change', calcularTrocoMisto);
+    document.getElementById('valor-pagamento').addEventListener('input', calcularTrocoMisto);
+
+    document.getElementById('btn-salvar-taxa').addEventListener('click', () => {
+      localStorage.setItem('tf_cop', document.getElementById('taxa-cop').value);
+      localStorage.setItem('tf_pen', document.getElementById('taxa-pen').value);
+      calcularConversor();
+      calcularTrocoMisto();
+      const msg = document.getElementById('msg-taxa');
+      msg.innerText = '✅ Cotação salva na memória offline!';
+      setTimeout(() => msg.innerText = '', 3000);
+    });
+
+    // ==========================================
+    // 4. FILTRO DO GUIA 3 PAÍSES
+    // ==========================================
+    const botoesFiltro = document.querySelectorAll('.filtro-btn');
+    const cardsGuia = document.querySelectorAll('.card');
+
+    botoesFiltro.forEach(btn => {
+      btn.addEventListener('click', () => {
+        botoesFiltro.forEach(b => b.classList.remove('ativo'));
+        btn.classList.add('ativo');
+        const pais = btn.getAttribute('data-pais');
+
+        cardsGuia.forEach(card => {
+          if (pais === 'todos' || card.getAttribute('data-pais').includes(pais)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ==========================================
+    // 5. DICIONÁRIO OFFLINE COM BUSCA
+    // ==========================================
+    const bancoDicionario = [
+      { cat: 'Dinheiro & Compras', pt: 'Quanto custa isso?', es: '¿Cuánto cuesta esto?' },
+      { cat: 'Dinheiro & Compras', pt: 'Qual é o preço em Reais / Pesos / Soles?', es: '¿Cuál es el precio en Reales / Pesos / Soles?' },
+      { cat: 'Dinheiro & Compras', pt: 'Quanto está o câmbio hoje?', es: '¿A cómo está el cambio hoy?' },
+      { cat: 'Dinheiro & Compras', pt: 'Meu troco / Onde pego o troco?', es: 'Mi vuelto / ¿Dónde recibo el vuelto?' },
+      { cat: 'Dinheiro & Compras', pt: 'Tem desconto à vista?', es: '¿Tiene descuento en efectivo?' },
+      { cat: 'Transporte & Fronteira', pt: 'Quanto custa o barco para Santa Rosa?', es: '¿Cuánto cuesta el bote a Santa Rosa?' },
+      { cat: 'Transporte & Fronteira', pt: 'Quanto cobra o mototáxi até o centro / porto?', es: '¿Cuánto cobra el mototaxi hasta el centro / puerto?' },
+      { cat: 'Transporte & Fronteira', pt: 'Onde fica a Polícia Federal / Imigração?', es: '¿Dónde queda la Policía / Migración?' },
+      { cat: 'Alimentação', pt: 'Quero um prato típico / almoço / água', es: 'Quiero un plato típico / almuerzo / agua' },
+      { cat: 'Alimentação', pt: 'A conta, por favor', es: 'La cuenta, por favor' },
+      { cat: 'Saúde & Emergência', pt: 'Onde fica a farmácia / hospital mais próximo?', es: '¿Dónde queda la farmacia / el hospital más cercano?' },
+      { cat: 'Saúde & Emergência', pt: 'Preciso de ajuda urgente', es: 'Necesito ayuda urgente' }
+    ];
+
+    function renderizarDicionario(filtroTexto = '') {
+      const container = document.getElementById('lista-dicionario');
+      container.innerHTML = '';
+      const termo = filtroTexto.toLowerCase();
+
+      const filtrados = bancoDicionario.filter(item =>
+        item.pt.toLowerCase().includes(termo) ||
+        item.es.toLowerCase().includes(termo) ||
+        item.cat.toLowerCase().includes(termo)
+      );
+
+      if (filtrados.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top:12px;">Nenhuma expressão encontrada.</p>';
+        return;
+      }
+
+      filtrados.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'frase-item';
+        div.innerHTML = `
+          <div class="frase-cat">${item.cat}</div>
+          <div class="frase-pt">🇧🇷 ${item.pt}</div>
+          <div class="frase-es">🇪🇸 ${item.es}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById('busca-dicionario').addEventListener('input', (e) => {
+      renderizarDicionario(e.target.value);
+    });
+    renderizarDicionario();
+
+    // ==========================================
+    // 6. LISTA E NOTAS OFFLINE
+    // ==========================================
+    let itensSalvos = JSON.parse(localStorage.getItem('tf_lista')) || [];
+
+    function renderizarLista() {
+      const container = document.getElementById('lista-itens');
+      container.innerHTML = '';
+      itensSalvos.forEach((texto, index) => {
+        const div = document.createElement('div');
+        div.className = 'item-lista';
+        div.innerHTML = `<span>• ${texto}</span> <button type="button" class="btn btn-vermelho" onclick="removerItem(${index})">X</button>`;
+        container.appendChild(div);
+      });
+    }
+
+    window.removerItem = function(index) {
+      itensSalvos.splice(index, 1);
+      localStorage.setItem('tf_lista', JSON.stringify(itensSalvos));
+      renderizarLista();
+    };
+
+    document.getElementById('btn-add-item').addEventListener('click', () => {
+      const input = document.getElementById('novo-item');
+      if (input.value.trim() !== '') {
+        itensSalvos.push(input.value.trim());
+        localStorage.setItem('tf_lista', JSON.stringify(itensSalvos));
+        input.value = '';
+        renderizarLista();
+      }
+    });
+
+    const areaNotas = document.getElementById('bloco-notas');
+    areaNotas.value = localStorage.getItem('tf_notas') || '';
+    areaNotas.addEventListener('input', () => {
+      localStorage.setItem('tf_notas', areaNotas.value);
+    });
+
+    renderizarLista();
+  </script>
+
+</body>
+</html>
