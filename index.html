@@ -73,18 +73,20 @@
       display: flex;
       background-color: #0b111e;
       border-bottom: 1px solid #1e293b;
+      overflow-x: auto;
     }
 
     .tab-btn {
       flex: 1;
-      padding: 12px 4px;
+      padding: 12px 6px;
       border: none;
       background: none;
       color: #94a3b8;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: bold;
       cursor: pointer;
       border-bottom: 3px solid transparent;
+      white-space: nowrap;
       transition: 0.2s;
     }
 
@@ -146,7 +148,6 @@
 
     .btn-azul { background: #0284c7; }
     .btn-verde { background: #059669; }
-    .btn-vermelho { background: #dc2626; padding: 5px 9px; width: auto; margin-top: 0; font-size: 11px; }
 
     .box-resultado {
       background-color: #0b111e;
@@ -165,8 +166,7 @@
     }
 
     .linha-moeda:last-child { border-bottom: none; }
-    .destaque-verde { font-weight: bold; color: #34d399; font-size: 14.5px; }
-    .destaque-alerta { font-weight: bold; color: #f87171; font-size: 13px; }
+    .destaque-verde { font-weight: bold; color: #34d399; font-size: 15px; }
 
     .secao-divisoria {
       margin-top: 18px;
@@ -181,91 +181,24 @@
       margin-bottom: 6px;
     }
 
-    /* Filtros e Cards do Guia */
-    .filtros {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .filtro-btn {
-      padding: 6px 10px;
-      border-radius: 20px;
-      border: 1px solid #334155;
-      background: #0b111e;
-      color: #cbd5e1;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .filtro-btn.ativo {
-      background: #0284c7;
-      color: white;
-      border-color: #0284c7;
-    }
-
     .card {
       background-color: #0b111e;
-      padding: 13px;
-      border-radius: 12px;
-      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
       border: 1px solid #1e293b;
     }
 
     .card h3 {
-      font-size: 13.5px;
+      font-size: 13px;
       color: #38bdf8;
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: space-between;
+      margin-bottom: 4px;
     }
 
     .card p {
-      font-size: 12.5px;
+      font-size: 12px;
       color: #cbd5e1;
-      line-height: 1.45;
-    }
-
-    .tag-pais {
-      font-size: 10px;
-      background: #1e293b;
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: #94a3b8;
-    }
-
-    /* Dicionário e Frases */
-    .frase-item {
-      background: #0b111e;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-top: 8px;
-      border-left: 3px solid #f59e0b;
-    }
-
-    .frase-cat {
-      font-size: 10px;
-      text-transform: uppercase;
-      color: #38bdf8;
-      font-weight: bold;
-      margin-bottom: 2px;
-    }
-
-    .frase-pt { font-size: 12.5px; color: #cbd5e1; }
-    .frase-es { font-size: 14px; color: #fbbf24; font-weight: bold; margin-top: 3px; }
-
-    /* Checklist Offline */
-    .item-lista {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0b111e;
-      padding: 9px 11px;
-      border-radius: 8px;
-      margin-top: 8px;
-      font-size: 13px;
+      line-height: 1.4;
     }
 
     footer {
@@ -294,15 +227,13 @@
     <!-- MENU DE NAVEGAÇÃO -->
     <div class="nav-tabs">
       <button type="button" class="tab-btn active" data-alvo="tela-cambio">💱 Câmbio</button>
-      <button type="button" class="tab-btn" data-alvo="tela-troco">🧮 Troco Misto</button>
+      <button type="button" class="tab-btn" data-alvo="tela-troco">🧮 Troco</button>
       <button type="button" class="tab-btn" data-alvo="tela-guia">📍 Guia</button>
-      <button type="button" class="tab-btn" data-alvo="tela-dicionario">🗣️ Dicionário</button>
+      <button type="button" class="tab-btn" data-alvo="tela-tradutor">🗣️ Tradutor</button>
       <button type="button" class="tab-btn" data-alvo="tela-notas">📝 Notas</button>
     </div>
 
-    <!-- ==========================================
-         TELA 1: CONVERSOR + COTAÇÃO OFFLINE
-    =========================================== -->
+    <!-- TELA 1: CÂMBIO -->
     <div id="tela-cambio" class="tela">
       <div class="titulo-secao">Conversor Rápido Simultâneo</div>
       
@@ -322,9 +253,9 @@
       </div>
 
       <div class="box-resultado">
-        <div class="linha-moeda"><span>🇧🇷 Real Brasileiro:</span> <span class="destaque-verde" id="res-brl">R$ 0,00</span></div>
-        <div class="linha-moeda"><span>🇨🇴 Peso Colombiano:</span> <span class="destaque-verde" id="res-cop">$ 0</span></div>
-        <div class="linha-moeda"><span>🇵🇪 Sol Peruano:</span> <span class="destaque-verde" id="res-pen">S/ 0,00</span></div>
+        <div class="linha-moeda"><span>🇧🇷 Real:</span> <span class="destaque-verde" id="res-brl">R$ 0,00</span></div>
+        <div class="linha-moeda"><span>🇨🇴 Peso:</span> <span class="destaque-verde" id="res-cop">$ 0</span></div>
+        <div class="linha-moeda"><span>🇵🇪 Sol:</span> <span class="destaque-verde" id="res-pen">S/ 0,00</span></div>
       </div>
 
       <div class="secao-divisoria">
@@ -344,13 +275,11 @@
       </div>
     </div>
 
-    <!-- ==========================================
-         TELA 2: CALCULADORA DE TROCO MISTO
-    =========================================== -->
+    <!-- TELA 2: TROCO MISTO -->
     <div id="tela-troco" class="tela hidden">
-      <div class="titulo-secao">🧮 Calculadora de Troco Misto</div>
+      <div class="titulo-secao">🧮 Calculadora de Troco Rápido (Caixa)</div>
       <p style="font-size:12px; color:#94a3b8; margin-bottom:8px;">
-        Ex: O produto custa em Pesos, mas você vai pagar com nota de Real ou Sol.
+        Agilize suas vendas: digite o preço na moeda do produto e o que o cliente entregou.
       </p>
 
       <div class="grid-2">
@@ -364,13 +293,13 @@
         </div>
         <div>
           <label>Valor da Compra:</label>
-          <input type="number" id="valor-compra" placeholder="Ex: 30000">
+          <input type="number" id="valor-compra" placeholder="Ex: 2900">
         </div>
       </div>
 
       <div class="grid-2">
         <div>
-          <label>Você pagou em:</label>
+          <label>Cliente pagou em:</label>
           <select id="moeda-pagamento">
             <option value="BRL">🇧🇷 Real (R$)</option>
             <option value="COP">🇨🇴 Peso (COP)</option>
@@ -383,85 +312,53 @@
         </div>
       </div>
 
+      <div id="resumo-operacao" style="font-size:12px; color:#cbd5e1; margin-top:10px; background:#0b111e; padding:8px 12px; border-radius:8px; border:1px solid #1e293b;">
+        Insira os dados para calcular o troco em tempo real.
+      </div>
+
       <div class="box-resultado" style="border-left-color: #38bdf8;">
-        <div id="status-troco" style="margin-bottom:6px;"></div>
-        <div class="linha-moeda"><span>🇧🇷 Troco em Real:</span> <span class="destaque-verde" id="troco-brl">R$ 0,00</span></div>
-        <div class="linha-moeda"><span>🇨🇴 Troco em Peso:</span> <span class="destaque-verde" id="troco-cop">$ 0</span></div>
-        <div class="linha-moeda"><span>🇵🇪 Troco em Sol:</span> <span class="destaque-verde" id="troco-pen">S/ 0,00</span></div>
+        <div class="titulo-secao" style="margin-bottom:8px;">Troco Exato a Devolver:</div>
+        <div class="linha-moeda"><span>🇧🇷 Em Real:</span> <span class="destaque-verde" id="troco-brl">R$ 0,00</span></div>
+        <div class="linha-moeda"><span>🇨🇴 Em Peso:</span> <span class="destaque-verde" id="troco-cop">$ 0</span></div>
+        <div class="linha-moeda"><span>🇵🇪 Em Sol:</span> <span class="destaque-verde" id="troco-pen">S/ 0,00</span></div>
       </div>
     </div>
 
-    <!-- ==========================================
-         TELA 3: GUIA COMPLETO DOS 3 PAÍSES
-    =========================================== -->
+    <!-- TELA 3: GUIA -->
     <div id="tela-guia" class="tela hidden">
-      <div class="filtros">
-        <button type="button" class="filtro-btn ativo" data-pais="todos">Todos</button>
-        <button type="button" class="filtro-btn" data-pais="br">🇧🇷 Tabatinga</button>
-        <button type="button" class="filtro-btn" data-pais="co">🇨🇴 Letícia</button>
-        <button type="button" class="filtro-btn" data-pais="pe">🇵🇪 Santa Rosa</button>
+      <div class="titulo-secao">📍 Guia da Tríplice Fronteira</div>
+      <div class="card">
+        <h3>🕒 Fuso Horário Local</h3>
+        <p><strong>Tabatinga (AM):</strong> 1 hora à frente de Letícia e Santa Rosa.</p>
       </div>
-
-      <div class="card" data-pais="br co pe">
-        <h3>🕒 Fuso Horário Local <span class="tag-pais">GERAL</span></h3>
-        <p><strong>Tabatinga (AM):</strong> 1 hora à frente.<br>
-           <strong>Letícia e Santa Rosa:</strong> 1 hora a menos que Tabatinga.</p>
+      <div class="card">
+        <h3>🛂 Imigração e Documentos</h3>
+        <p>Circulação livre urbana entre Tabatinga e Letícia. Para voos em Letícia ou interior da Colômbia/Peru, registre entrada na <strong>Polícia Federal</strong> e <strong>Migración</strong>.</p>
       </div>
-
-      <div class="card" data-pais="br co pe">
-        <h3>🛂 Imigração e Documentos <span class="tag-pais">FRONTEIRA</span></h3>
-        <p>Circulação livre entre Tabatinga e Letícia na área urbana. Para voos em Letícia ou viagens ao interior da Colômbia/Peru, registre entrada na <strong>Polícia Federal</strong> e <strong>Migración</strong> (RG menos de 10 anos ou Passaporte).</p>
-      </div>
-
-      <div class="card" data-pais="pe br co">
-        <h3>🚤 Travessia Santa Rosa <span class="tag-pais">TRANSPORTE</span></h3>
-        <p>Barcos saem continuamente (06h às 18h) do Porto de Tabatinga e do Malecón de Letícia. Travessia dura ~10 min e aceita Real, Peso ou Sol.</p>
-      </div>
-
-      <div class="card" data-pais="br">
-        <h3>🇧🇷 Tabatinga — Utilidades <span class="tag-pais">BRASIL</span></h3>
-        <p><strong>Emergência:</strong> PM (190) • SAMU (192) • Bombeiros (193) • UPA.<br>
-           <strong>Bancos:</strong> Banco do Brasil, Caixa Econômica e Bradesco.</p>
-      </div>
-
-      <div class="card" data-pais="co">
-        <h3>🇨🇴 Letícia — Utilidades <span class="tag-pais">COLÔMBIA</span></h3>
-        <p><strong>Emergência:</strong> Policía Nacional (123) • Hospital San Rafael.<br>
-           <strong>Comércio:</strong> Casas de câmbio na Carrera 11 e Avenida Internacional.</p>
-      </div>
-
-      <div class="card" data-pais="pe">
-        <h3>🇵🇪 Santa Rosa — Utilidades <span class="tag-pais">PERU</span></h3>
-        <p><strong>Gastronomia:</strong> Restaurantes flutuantes (Ceviche, Pollo a la Brasa).<br>
-           <strong>Conexão Fluvial:</strong> Lanchas rápidas para Iquitos pelo Rio Amazonas.</p>
+      <div class="card">
+        <h3>🚤 Travessia Santa Rosa</h3>
+        <p>Barcos contínuos (06h às 18h) do Porto de Tabatinga e Malecón (~10 min). Aceitam Real, Peso ou Sol.</p>
       </div>
     </div>
 
-    <!-- ==========================================
-         TELA 4: DICIONÁRIO PORTUGUÊS -> ESPANHOL
-    =========================================== -->
-    <div id="tela-dicionario" class="tela hidden">
-      <div class="titulo-secao">🗣️ Dicionário de Bolso (Português → Espanhol)</div>
-      <input type="text" id="busca-dicionario" placeholder="🔍 Pesquisar palavra (ex: troco, barco, preço, água)...">
-      <div id="lista-dicionario"></div>
+    <!-- TELA 4: TRADUTOR OFFLINE -->
+    <div id="tela-tradutor" class="tela hidden">
+      <div class="titulo-secao">🗣️ Tradutor Offline (Português → Espanhol)</div>
+      <div style="margin-bottom: 10px;">
+        <label>Digite em Português:</label>
+        <textarea rows="3" id="texto-para-traduzir" placeholder="Ex: Quanto custa uma água?"></textarea>
+      </div>
+      <button type="button" class="btn btn-azul" id="btn-traduzir">⚡ Traduzir Agora</button>
+      <div class="box-resultado" style="margin-top: 15px; border-left-color: #fbbf24;">
+        <div class="titulo-secao" style="color: #fbbf24; margin-bottom: 6px;">Tradução:</div>
+        <p id="resultado-traducao" style="font-size: 14px; color: #ffffff; min-height: 30px;">A tradução aparecerá aqui...</p>
+      </div>
     </div>
 
-    <!-- ==========================================
-         TELA 5: LISTA E BLOCO DE NOTAS OFFLINE
-    =========================================== -->
+    <!-- TELA 5: NOTAS -->
     <div id="tela-notas" class="tela hidden">
-      <div class="titulo-secao">🛒 Checklist / Lista de Compras</div>
-      <div style="display: flex; gap: 8px;">
-        <input type="text" id="novo-item" placeholder="Ex: Comprar café em Letícia...">
-        <button type="button" class="btn btn-azul" id="btn-add-item" style="width: auto; margin-top: 0;">+</button>
-      </div>
-      <div id="lista-itens"></div>
-
-      <div class="secao-divisoria">
-        <div class="titulo-secao">📝 Bloco de Notas Offline</div>
-        <textarea id="bloco-notas" rows="5" placeholder="Anote telefones, placas, preços ou horários..."></textarea>
-        <p style="color:#34d399; font-size:11px; margin-top:5px;">✅ Salvo automaticamente sem internet.</p>
-      </div>
+      <div class="titulo-secao">📝 Bloco de Notas Offline</div>
+      <textarea rows="7" id="bloco-notas" placeholder="Escreva suas anotações aqui..."></textarea>
     </div>
 
     <footer>
@@ -469,232 +366,219 @@
     </footer>
   </div>
 
+  <!-- SCRIPT COMPLETO E CORRIGIDO -->
   <script>
-    // ==========================================
-    // 1. NAVEGAÇÃO ENTRE AS 5 ABAS
-    // ==========================================
-    const botoesAba = document.querySelectorAll('.tab-btn');
-    const telas = document.querySelectorAll('.tela');
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Navegação de Abas
+      const botoesTabs = document.querySelectorAll(".tab-btn");
+      const telas = document.querySelectorAll(".tela");
 
-    botoesAba.forEach(botao => {
-      botao.addEventListener('click', () => {
-        telas.forEach(t => t.classList.add('hidden'));
-        botoesAba.forEach(b => b.classList.remove('active'));
-        document.getElementById(botao.getAttribute('data-alvo')).classList.remove('hidden');
-        botao.classList.add('active');
-      });
-    });
-
-    // ==========================================
-    // 2. MONITOR DE REDE (ONLINE / OFFLINE)
-    // ==========================================
-    function verificarRede() {
-      const badge = document.getElementById('badge-rede');
-      if (navigator.onLine) {
-        badge.innerText = '🟢 Online';
-        badge.className = 'badge online';
-      } else {
-        badge.innerText = '🔴 Offline (Ativo)';
-        badge.className = 'badge offline';
-      }
-    }
-    window.addEventListener('online', verificarRede);
-    window.addEventListener('offline', verificarRede);
-    verificarRede();
-
-    // ==========================================
-    // 3. CONVERSOR E TROCO MISTO
-    // ==========================================
-    if (localStorage.getItem('tf_cop')) document.getElementById('taxa-cop').value = localStorage.getItem('tf_cop');
-    if (localStorage.getItem('tf_pen')) document.getElementById('taxa-pen').value = localStorage.getItem('tf_pen');
-
-    function obterTaxas() {
-      return {
-        BRL: 1,
-        COP: parseFloat(document.getElementById('taxa-cop').value) || 750,
-        PEN: parseFloat(document.getElementById('taxa-pen').value) || 0.65
-      };
-    }
-
-    function calcularConversor() {
-      const taxas = obterTaxas();
-      const moeda = document.getElementById('moeda-origem').value;
-      const valor = parseFloat(document.getElementById('valor-entrada').value) || 0;
-
-      const emReal = valor / taxas[moeda];
-
-      document.getElementById('res-brl').innerText = 'R$ ' + emReal.toFixed(2).replace('.', ',');
-      document.getElementById('res-cop').innerText = '$ ' + Math.round(emReal * taxas.COP).toLocaleString('pt-BR');
-      document.getElementById('res-pen').innerText = 'S/ ' + (emReal * taxas.PEN).toFixed(2).replace('.', ',');
-    }
-
-    function calcularTrocoMisto() {
-      const taxas = obterTaxas();
-      const moedaCompra = document.getElementById('moeda-compra').value;
-      const valorCompra = parseFloat(document.getElementById('valor-compra').value) || 0;
-
-      const moedaPag = document.getElementById('moeda-pagamento').value;
-      const valorPag = parseFloat(document.getElementById('valor-pagamento').value) || 0;
-
-      const compraEmReal = valorCompra / taxas[moedaCompra];
-      const pagEmReal = valorPag / taxas[moedaPag];
-      const diferencaReal = pagEmReal - compraEmReal;
-
-      const statusDiv = document.getElementById('status-troco');
-
-      if (valorCompra === 0 || valorPag === 0) {
-        statusDiv.innerHTML = '';
-        document.getElementById('troco-brl').innerText = 'R$ 0,00';
-        document.getElementById('troco-cop').innerText = '$ 0';
-        document.getElementById('troco-pen').innerText = 'S/ 0,00';
-        return;
-      }
-
-      if (diferencaReal < 0) {
-        const faltaReal = Math.abs(diferencaReal);
-        statusDiv.innerHTML = `<span class="destaque-alerta">⚠️ Falta pagar: R$ ${faltaReal.toFixed(2).replace('.', ',')} (ou $ ${Math.round(faltaReal * taxas.COP).toLocaleString('pt-BR')} COP)</span>`;
-        document.getElementById('troco-brl').innerText = 'R$ 0,00';
-        document.getElementById('troco-cop').innerText = '$ 0';
-        document.getElementById('troco-pen').innerText = 'S/ 0,00';
-      } else {
-        statusDiv.innerHTML = `<span style="color:#38bdf8; font-size:12px; font-weight:bold;">✅ Seu troco equivalente é:</span>`;
-        document.getElementById('troco-brl').innerText = 'R$ ' + diferencaReal.toFixed(2).replace('.', ',');
-        document.getElementById('troco-cop').innerText = '$ ' + Math.round(diferencaReal * taxas.COP).toLocaleString('pt-BR');
-        document.getElementById('troco-pen').innerText = 'S/ ' + (diferencaReal * taxas.PEN).toFixed(2).replace('.', ',');
-      }
-    }
-
-    document.getElementById('valor-entrada').addEventListener('input', calcularConversor);
-    document.getElementById('moeda-origem').addEventListener('change', calcularConversor);
-
-    document.getElementById('moeda-compra').addEventListener('change', calcularTrocoMisto);
-    document.getElementById('valor-compra').addEventListener('input', calcularTrocoMisto);
-    document.getElementById('moeda-pagamento').addEventListener('change', calcularTrocoMisto);
-    document.getElementById('valor-pagamento').addEventListener('input', calcularTrocoMisto);
-
-    document.getElementById('btn-salvar-taxa').addEventListener('click', () => {
-      localStorage.setItem('tf_cop', document.getElementById('taxa-cop').value);
-      localStorage.setItem('tf_pen', document.getElementById('taxa-pen').value);
-      calcularConversor();
-      calcularTrocoMisto();
-      const msg = document.getElementById('msg-taxa');
-      msg.innerText = '✅ Cotação salva na memória offline!';
-      setTimeout(() => msg.innerText = '', 3000);
-    });
-
-    // ==========================================
-    // 4. FILTRO DO GUIA 3 PAÍSES
-    // ==========================================
-    const botoesFiltro = document.querySelectorAll('.filtro-btn');
-    const cardsGuia = document.querySelectorAll('.card');
-
-    botoesFiltro.forEach(btn => {
-      btn.addEventListener('click', () => {
-        botoesFiltro.forEach(b => b.classList.remove('ativo'));
-        btn.classList.add('ativo');
-        const pais = btn.getAttribute('data-pais');
-
-        cardsGuia.forEach(card => {
-          if (pais === 'todos' || card.getAttribute('data-pais').includes(pais)) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
+      botoesTabs.forEach(botao => {
+        botao.addEventListener("click", () => {
+          botoesTabs.forEach(b => b.classList.remove("active"));
+          telas.forEach(t => t.classList.add("hidden"));
+          botao.classList.add("active");
+          const alvo = document.getElementById(botao.getAttribute("data-alvo"));
+          if (alvo) alvo.classList.remove("hidden");
         });
       });
-    });
 
-    // ==========================================
-    // 5. DICIONÁRIO OFFLINE COM BUSCA
-    // ==========================================
-    const bancoDicionario = [
-      { cat: 'Dinheiro & Compras', pt: 'Quanto custa isso?', es: '¿Cuánto cuesta esto?' },
-      { cat: 'Dinheiro & Compras', pt: 'Qual é o preço em Reais / Pesos / Soles?', es: '¿Cuál es el precio en Reales / Pesos / Soles?' },
-      { cat: 'Dinheiro & Compras', pt: 'Quanto está o câmbio hoje?', es: '¿A cómo está el cambio hoy?' },
-      { cat: 'Dinheiro & Compras', pt: 'Meu troco / Onde pego o troco?', es: 'Mi vuelto / ¿Dónde recibo el vuelto?' },
-      { cat: 'Dinheiro & Compras', pt: 'Tem desconto à vista?', es: '¿Tiene descuento en efectivo?' },
-      { cat: 'Transporte & Fronteira', pt: 'Quanto custa o barco para Santa Rosa?', es: '¿Cuánto cuesta el bote a Santa Rosa?' },
-      { cat: 'Transporte & Fronteira', pt: 'Quanto cobra o mototáxi até o centro / porto?', es: '¿Cuánto cobra el mototaxi hasta el centro / puerto?' },
-      { cat: 'Transporte & Fronteira', pt: 'Onde fica a Polícia Federal / Imigração?', es: '¿Dónde queda la Policía / Migración?' },
-      { cat: 'Alimentação', pt: 'Quero um prato típico / almoço / água', es: 'Quiero un plato típico / almuerzo / agua' },
-      { cat: 'Alimentação', pt: 'A conta, por favor', es: 'La cuenta, por favor' },
-      { cat: 'Saúde & Emergência', pt: 'Onde fica a farmácia / hospital mais próximo?', es: '¿Dónde queda la farmacia / el hospital más cercano?' },
-      { cat: 'Saúde & Emergência', pt: 'Preciso de ajuda urgente', es: 'Necesito ayuda urgente' }
-    ];
+      // Elementos de Cotação
+      const taxaCopInput = document.getElementById("taxa-cop");
+      const taxaPenInput = document.getElementById("taxa-pen");
 
-    function renderizarDicionario(filtroTexto = '') {
-      const container = document.getElementById('lista-dicionario');
-      container.innerHTML = '';
-      const termo = filtroTexto.toLowerCase();
-
-      const filtrados = bancoDicionario.filter(item =>
-        item.pt.toLowerCase().includes(termo) ||
-        item.es.toLowerCase().includes(termo) ||
-        item.cat.toLowerCase().includes(termo)
-      );
-
-      if (filtrados.length === 0) {
-        container.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top:12px;">Nenhuma expressão encontrada.</p>';
-        return;
+      function obterTaxas() {
+        const tCop = parseFloat(taxaCopInput.value);
+        const tPen = parseFloat(taxaPenInput.value);
+        return {
+          cop: (tCop && tCop > 10) ? tCop : 750,  // Garante que taxa do peso nunca fique baixa demais
+          pen: (tPen && tPen > 0) ? tPen : 0.65
+        };
       }
 
-      filtrados.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'frase-item';
-        div.innerHTML = `
-          <div class="frase-cat">${item.cat}</div>
-          <div class="frase-pt">🇧🇷 ${item.pt}</div>
-          <div class="frase-es">🇪🇸 ${item.es}</div>
-        `;
-        container.appendChild(div);
-      });
-    }
+      // 2. Conversor Rápido
+      const inputValor = document.getElementById("valor-entrada");
+      const selectOrigem = document.getElementById("moeda-origem");
+      const resBrl = document.getElementById("res-brl");
+      const resCop = document.getElementById("res-cop");
+      const resPen = document.getElementById("res-pen");
 
-    document.getElementById('busca-dicionario').addEventListener('input', (e) => {
-      renderizarDicionario(e.target.value);
-    });
-    renderizarDicionario();
+      function calcularConversao() {
+        const valor = parseFloat(inputValor.value) || 0;
+        const origem = selectOrigem.value;
+        const taxas = obterTaxas();
 
-    // ==========================================
-    // 6. LISTA E NOTAS OFFLINE
-    // ==========================================
-    let itensSalvos = JSON.parse(localStorage.getItem('tf_lista')) || [];
+        let emBrl = 0;
+        if (origem === "BRL") emBrl = valor;
+        else if (origem === "COP") emBrl = valor / taxas.cop;
+        else if (origem === "PEN") emBrl = valor / taxas.pen;
 
-    function renderizarLista() {
-      const container = document.getElementById('lista-itens');
-      container.innerHTML = '';
-      itensSalvos.forEach((texto, index) => {
-        const div = document.createElement('div');
-        div.className = 'item-lista';
-        div.innerHTML = `<span>• ${texto}</span> <button type="button" class="btn btn-vermelho" onclick="removerItem(${index})">X</button>`;
-        container.appendChild(div);
-      });
-    }
-
-    window.removerItem = function(index) {
-      itensSalvos.splice(index, 1);
-      localStorage.setItem('tf_lista', JSON.stringify(itensSalvos));
-      renderizarLista();
-    };
-
-    document.getElementById('btn-add-item').addEventListener('click', () => {
-      const input = document.getElementById('novo-item');
-      if (input.value.trim() !== '') {
-        itensSalvos.push(input.value.trim());
-        localStorage.setItem('tf_lista', JSON.stringify(itensSalvos));
-        input.value = '';
-        renderizarLista();
+        resBrl.textContent = "R$ " + emBrl.toFixed(2);
+        resCop.textContent = "$ " + Math.round(emBrl * taxas.cop).toLocaleString('pt-BR');
+        resPen.textContent = "S/ " + (emBrl * taxas.pen).toFixed(2);
       }
-    });
 
-    const areaNotas = document.getElementById('bloco-notas');
-    areaNotas.value = localStorage.getItem('tf_notas') || '';
-    areaNotas.addEventListener('input', () => {
-      localStorage.setItem('tf_notas', areaNotas.value);
-    });
+      if (inputValor) inputValor.addEventListener("input", calcularConversao);
+      if (selectOrigem) selectOrigem.addEventListener("change", calcularConversao);
 
-    renderizarLista();
+      // 3. Calculadora de Troco Rápido (Tempo Real)
+      const moedaCompra = document.getElementById("moeda-compra");
+      const valorCompra = document.getElementById("valor-compra");
+      const moedaPagamento = document.getElementById("moeda-pagamento");
+      const valorPagamento = document.getElementById("valor-pagamento");
+      const resumoOperacao = document.getElementById("resumo-operacao");
+
+      const trocoBrl = document.getElementById("troco-brl");
+      const trocoCop = document.getElementById("troco-cop");
+      const trocoPen = document.getElementById("troco-pen");
+
+      function converterParaReais(valor, moeda, taxas) {
+        if (moeda === "BRL") return valor;
+        if (moeda === "COP") return valor / taxas.cop;
+        if (moeda === "PEN") return valor / taxas.pen;
+        return 0;
+      }
+
+      function calcularTrocoMisto() {
+        const vCompra = parseFloat(valorCompra.value) || 0;
+        const mCompra = moedaCompra.value;
+        const vPago = parseFloat(valorPagamento.value) || 0;
+        const mPago = moedaPagamento.value;
+        const taxas = obterTaxas();
+
+        if (vCompra === 0 && vPago === 0) {
+          resumoOperacao.innerHTML = "Insira os dados para calcular o troco em tempo real.";
+          trocoBrl.textContent = "R$ 0,00";
+          trocoCop.textContent = "$ 0";
+          trocoPen.textContent = "S/ 0,00";
+          return;
+        }
+
+        // Converte o valor da compra para Reais usando a cotação ativa
+        const compraEmBrl = converterParaReais(vCompra, mCompra, taxas);
+        // Converte o valor entregue pelo cliente para Reais
+        const pagoEmBrl = converterParaReais(vPago, mPago, taxas);
+        
+        const diferencaBrl = pagoEmBrl - compraEmBrl;
+
+        resumoOperacao.innerHTML = `💡 <strong>Conversão Atual:</strong> Compra de <strong>${vCompra.toLocaleString('pt-BR')} ${mCompra}</strong> = <strong>R$ ${compraEmBrl.toFixed(2)}</strong> <br><span style="color:#38bdf8; font-size:11px;">(Cotação ativa: 1 R$ = ${taxas.cop} COP | ${taxas.pen} PEN)</span>`;
+
+        if (diferencaBrl < 0) {
+          const faltaBrl = Math.abs(diferencaBrl);
+          resumoOperacao.innerHTML += `<br><span style="color:#f87171;">⚠️ Dinheiro insuficiente! Faltam <strong>R$ ${faltaBrl.toFixed(2)}</strong> ($ ${Math.round(faltaBrl * taxas.cop).toLocaleString('pt-BR')} COP).</span>`;
+          trocoBrl.textContent = "R$ 0,00";
+          trocoCop.textContent = "$ 0";
+          trocoPen.textContent = "S/ 0,00";
+          return;
+        }
+
+        // Exibe o troco convertido nas 3 moedas de forma idêntica e precisa
+        trocoBrl.textContent = "R$ " + diferencaBrl.toFixed(2);
+        trocoCop.textContent = "$ " + Math.round(diferencaBrl * taxas.cop).toLocaleString('pt-BR');
+        trocoPen.textContent = "S/ " + (diferencaBrl * taxas.pen).toFixed(2);
+      }
+
+      [moedaCompra, valorCompra, moedaPagamento, valorPagamento].forEach(el => {
+        if (el) {
+          el.addEventListener("input", calcularTrocoMisto);
+          el.addEventListener("change", calcularTrocoMisto);
+        }
+      });
+
+      if (taxaCopInput) taxaCopInput.addEventListener("input", () => { calcularConversao(); calcularTrocoMisto(); });
+      if (taxaPenInput) taxaPenInput.addEventListener("input", () => { calcularConversao(); calcularTrocoMisto(); });
+
+      // 4. Bloco de Notas Offline
+      const blocoNotas = document.getElementById("bloco-notas");
+      if (blocoNotas) {
+        blocoNotas.value = localStorage.getItem("nota_usuario") || "";
+        blocoNotas.addEventListener("input", () => {
+          localStorage.setItem("nota_usuario", blocoNotas.value);
+        });
+      }
+
+      // 5. Cotação Automática + Sincronização
+      const badgeRede = document.getElementById("badge-rede");
+      const msgTaxa = document.getElementById("msg-taxa");
+      const btnSalvarTaxa = document.getElementById("btn-salvar-taxa");
+
+      async function carregarCotacaoAutomatica() {
+        const salvoCOP = localStorage.getItem("cotacao_cop");
+        const salvoPEN = localStorage.getItem("cotacao_pen");
+        if (salvoCOP && taxaCopInput) taxaCopInput.value = salvoCOP;
+        if (salvoPEN && taxaPenInput) taxaPenInput.value = salvoPEN;
+        
+        calcularConversao();
+        calcularTrocoMisto();
+
+        if (!navigator.onLine) return;
+
+        try {
+          const resposta = await fetch("https://economia.awesomeapi.com.br/json/last/BRL-COP,BRL-PEN");
+          const dados = await resposta.json();
+
+          if (dados && dados.BRLCOP && dados.BRLPEN) {
+            const valorCOP = parseFloat(dados.BRLCOP.bid).toFixed(2);
+            const valorPEN = parseFloat(dados.BRLPEN.bid).toFixed(4);
+
+            // Só atualiza automático se os inputs estiverem com o valor padrão ou se o usuário não tiver salvo uma taxa personalizada recente
+            if (taxaCopInput && (!salvoCOP || salvoCOP == "750")) taxaCopInput.value = valorCOP;
+            if (taxaPenInput && (!salvoPEN || salvoPEN == "0.65")) taxaPenInput.value = valorPEN;
+
+            calcularConversao();
+            calcularTrocoMisto();
+
+            if (badgeRede) {
+              badgeRede.className = "badge online";
+              badgeRede.textContent = "🟢 Online";
+            }
+          }
+        } catch (erro) {
+          if (badgeRede) {
+            badgeRede.className = "badge offline";
+            badgeRede.textContent = "🔴 Offline";
+          }
+        }
+      }
+
+      if (btnSalvarTaxa) {
+        btnSalvarTaxa.addEventListener("click", () => {
+          localStorage.setItem("cotacao_cop", taxaCopInput.value);
+          localStorage.setItem("cotacao_pen", taxaPenInput.value);
+          calcularConversao();
+          calcularTrocoMisto();
+          msgTaxa.style.color = "#34d399";
+          msgTaxa.textContent = "Cotação salva e troco atualizado!";
+          setTimeout(() => { msgTaxa.textContent = ""; }, 3000);
+        });
+      }
+
+      // 6. Tradutor Offline
+      const textoParaTraduzir = document.getElementById("texto-para-traduzir");
+      const btnTraduzir = document.getElementById("btn-traduzir");
+      const resultadoTraducao = document.getElementById("resultado-traducao");
+
+      const dicionarioOffline = {
+        "quanto custa": "cuánto cuesta", "bom dia": "buenos días", "boa tarde": "buenas tardes",
+        "obrigado": "gracias", "água": "agua", "pão": "pan", "cerveja": "cerveza",
+        "porto": "puerto", "barco": "barco", "lancha": "lancha", "dinheiro": "dinero",
+        "troco": "cambio", "desconto": "descuento", "quanto": "cuánto", "onde": "dónde"
+      };
+
+      if (btnTraduzir) {
+        btnTraduzir.addEventListener("click", () => {
+          const texto = (textoParaTraduzir.value || "").toLowerCase().trim();
+          if (!texto) {
+            resultadoTraducao.textContent = "Digite algo.";
+            return;
+          }
+          let traduzido = dicionarioOffline[texto] || "Tradução offline básica: " + texto;
+          resultadoTraducao.textContent = traduzido.charAt(0).toUpperCase() + traduzido.slice(1);
+        });
+      }
+
+      carregarCotacaoAutomatica();
+    });
   </script>
-
 </body>
 </html>
